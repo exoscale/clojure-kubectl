@@ -57,7 +57,7 @@
 
   - `:path`: kubectl path.
   - `:namespace`: the pod namespace.
-  - `:pod`: the pod name.
+  - `:resource`: the pod name.
   - `:json?`: enable json formatting"
   [config]
   (cond-> (-> (kubectl (or (:path config) default-path))
