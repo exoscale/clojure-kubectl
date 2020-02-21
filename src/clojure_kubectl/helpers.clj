@@ -48,8 +48,8 @@
   (flag m :-o :yaml))
 
 (defn stdin
-  [m value]
   "Pass value to kubectl from stdin"
+  [m value]
   (assoc m :stdin value))
 
 (defn get-pod

@@ -4,7 +4,7 @@ A Clojure wrapper for the `kubectl` CLI.
 
 ## Usage
 
-Commands are represented as map. Valid keys are:
+Commands are represented as a map. Valid keys are:
 
 - `:path`: the path to the kubectl binary.
 - `:command`: the kubectl command to execute (`get` for example).

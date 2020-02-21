@@ -3,12 +3,14 @@
             [clojure.test :refer :all]))
 
 (deftest kubectl-test
-  (is (= {:path "kubectl"
-          :flags []}
-         (kubectl)))
-  (is (= {:path "/tmp/kubectl"
-          :flags []}
-         (kubectl "/tmp/kubectl"))))
+  (testing "default path for kubectl"
+    (is (= {:path "kubectl"
+            :flags []}
+           (kubectl))))
+  (testing "override kubectl path"
+    (is (= {:path "/tmp/kubectl"
+            :flags []}
+           (kubectl "/tmp/kubectl")))))
 
 (deftest command-test
   (is (= {:path "kubectl"

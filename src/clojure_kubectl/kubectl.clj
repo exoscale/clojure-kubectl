@@ -16,12 +16,10 @@
   "Takes a map representing a kubectl command.
   Returns a vector of string containing the command pass to `shell/sh`"
   [cmd]
-  (->> (cond-> []
-         true
-         (conj (-> cmd :path)
-               (-> cmd :command ->name)
-               (-> cmd :type ->name)
-               (-> cmd :resource ->name))
+  (->> (cond-> [(-> cmd :path)
+                (-> cmd :command ->name)
+                (-> cmd :type ->name)
+                (-> cmd :resource ->name)]
 
          (not-empty (:flags cmd))
          (add-flags (:flags cmd))
