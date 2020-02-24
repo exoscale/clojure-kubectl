@@ -31,6 +31,9 @@
   "Takes a map representing a kubectl command, executes it.
   Throws if the command returns an error."
   [cmd]
+  (when-not (:path cmd)
+    (throw  (ex/ex-fault "path is missing in command"
+                         {:command cmd})))
   (let [result (apply shell/sh cmd)]
     (when-not (zero? (:exit result))
       (throw (ex/ex-fault "error executing kubectl command"
