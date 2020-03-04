@@ -1,31 +1,39 @@
-(ns clojure-kubectl.kubectl
+(ns exoscale.kubectl
   (:require [clojure.java.shell :as shell]
             [exoscale.ex :as ex]))
 
-(defn ->name
-  [v]
-  (if (instance? clojure.lang.Named v)
-    (name v)
-    v))
-
 (defn add-flags
   [result flags]
-  (apply conj result (->> flags flatten (map ->name))))
+  (into result
+        (comp (mapcat (fn [flag]
+                        (cond-> flag
+                          (not (coll? flag))
+                          vector)))
+              (map name))
+        flags))
 
 (defn build-shell-command
   "Takes a map representing a kubectl command.
   Returns a vector of string containing the command pass to `shell/sh`"
-  [cmd]
-  (->> (cond-> [(-> cmd :path)
-                (-> cmd :command ->name)
-                (-> cmd :type ->name)
-                (-> cmd :resource ->name)]
+  [{:as cmd :keys [path command type resource flags stdin]}]
+  (cond-> []
+    (some? path)
+    (conj path)
 
-         (not-empty (:flags cmd))
-         (add-flags (:flags cmd))
+    (some? command)
+    (conj (name command))
 
-         (:stdin cmd) (conj "-" (:stdin cmd)))
-       (remove nil?)))
+    (some? type)
+    (conj (name type))
+
+    (some? resource)
+    (conj (name resource))
+
+    (not-empty flags)
+    (add-flags flags)
+
+    stdin
+    (conj "-" stdin)))
 
 (defn run-command
   "Takes a map representing a kubectl command, executes it.
@@ -41,5 +49,5 @@
                            :result result})))
     (:stdout result)))
 
-(defprotocol IKubectlCommand
+(defprotocol Runner
   (run [this cmd] "Run a kubectl command"))
