@@ -1,4 +1,4 @@
-(ns clojure-kubectl.helpers
+(ns exoscale.kubectl.helpers
   "Helper functions to build kubectl commands"
   (:refer-clojure :exclude [type namespace]))
 

@@ -1,5 +1,5 @@
 (ns clojure-kubectl.kubectl-test
-  (:require [clojure-kubectl.kubectl :refer :all]
+  (:require [exoscale.kubectl :refer :all]
             [clojure.test :refer :all]))
 
 (deftest build-shell-command-test

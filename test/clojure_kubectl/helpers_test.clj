@@ -1,5 +1,5 @@
 (ns clojure-kubectl.helpers-test
-  (:require [clojure-kubectl.helpers :refer :all]
+  (:require [exoscale.kubectl.helpers :refer :all]
             [clojure.test :refer :all]))
 
 (deftest kubectl-test
