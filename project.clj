@@ -1,7 +1,8 @@
 (defproject exoscale/kubectl "0.1.0-SNAPSHOT"
   :description "A wrapper around the kubectl CLI"
   :url "https://github.com/exoscale/clojure-kubectl"
-  :plugins [[lein-codox "0.10.7"]]
+  :plugins [[lein-codox "0.10.7"]
+            [exoscale/sos-wagon-private "1.3.2-exoscale8"]]
 
   :dependencies [[exoscale/ex "0.3.4"]
                  [org.clojure/clojure "1.10.1"]]
