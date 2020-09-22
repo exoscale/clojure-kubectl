@@ -2,9 +2,9 @@
 
 A Clojure wrapper for the `kubectl` CLI.
 
-[![cljdoc badge](https://cljdoc.xyz/badge/exoscale/clojure-kubectl)](https://cljdoc.xyz/d/exoscale/clojure-kubectl/CURRENT)
+[![cljdoc badge](https://cljdoc.xyz/badge/exoscale/kubectl)](https://cljdoc.xyz/d/exoscale/kubectl/CURRENT)
 
-[![Clojars Project](https://img.shields.io/clojars/v/exoscale/clojure-kubectl.svg)](https://clojars.org/exoscale/clojure-kubectl)
+[![Clojars Project](https://img.shields.io/clojars/v/exoscale/kubectl.svg)](https://clojars.org/exoscale/kubectl)
 
 ## Usage
 
@@ -29,7 +29,7 @@ For example, the command `kubectl get pods -n backend -o json my-pod` can be des
 
 ### Helper functions
 
-The `clojure-kubectl.helpers` namespace contains helper functions to build command maps. For example, the previous command can be generated with:
+The `exoscale.kubectl.helpers` namespace contains helper functions to build command maps. For example, the previous command can be generated with:
 
 ```clojure
 (require '[exoscale.kubectl.helpers :as h])
@@ -57,6 +57,6 @@ You can even pass a manifest as a string to apply with the `apply-stdin` helper:
 
 ### Running the command
 
-The command map can be run with `clojure-kubectl.kubectl/run-command`.
+The command map can be run with `exoscale.kubectl/run-command`.
 If the command is successful (i.e the status code is 0), the stdout of the command will be returned.
 If the command fails, an exception will be thrown. The exception data will contain the executed command, the stdout, stderr, and the status code.
