@@ -2,6 +2,10 @@
 
 A Clojure wrapper for the `kubectl` CLI.
 
+[![cljdoc badge](https://cljdoc.xyz/badge/exoscale/clojure-kubectl)](https://cljdoc.xyz/d/exoscale/clojure-kubectl/CURRENT)
+
+[![Clojars Project](https://img.shields.io/clojars/v/exoscale/clojure-kubectl.svg)](https://clojars.org/exoscale/clojure-kubectl)
+
 ## Usage
 
 Commands are represented as a map. Valid keys are:

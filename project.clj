@@ -1,8 +1,7 @@
 (defproject exoscale/kubectl "0.1.4-SNAPSHOT"
   :description "A wrapper around the kubectl CLI"
   :url "https://github.com/exoscale/clojure-kubectl"
-  :plugins [[lein-codox "0.10.7"]
-            [lein-cljfmt "0.7.0"]
+  :plugins [[lein-cljfmt "0.7.0"]
             [lein-cloverage "1.1.2"]]
   :license {:name "ISC"}
   :dependencies [[exoscale/ex "0.3.14"]
@@ -17,8 +16,4 @@
                   ["deploy"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
-                  ["vcs" "push"]]
-  :codox {:source-uri   "https://github.com/exoscale/clojure-kubectl/blob/master/{filepath}#L{line}"
-          :doc-files ["README.md"]
-          :metadata     {:doc/format :markdown}
-          :source-paths ["src"]})
+                  ["vcs" "push"]])
