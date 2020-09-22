@@ -91,14 +91,14 @@
              (labels {:a "first-value"
                       :b "second-value"})))))
 
-(deftest get-pod-test
+(deftest get-pods-test
   (is (= {:path "kubectl"
           :command :get
           :type :pods
           :resource :foo
           :flags [[:-n :backend]
                   [:-o :json]]}
-         (get-pod {:namespace :backend
+         (get-pods {:namespace :backend
                    :resource :foo
                    :json? true})))
 
@@ -110,7 +110,7 @@
                   [:-l "x=one"]
                   [:-l "y=two"]
                   [:-o :yaml]]}
-         (get-pod {:namespace :backend
+         (get-pods {:namespace :backend
                    :resource :foo
                    :labels {:x :one :y :two}
                    :yaml? true})))
@@ -164,15 +164,15 @@
          (delete-secrets {:namespace :backend
                           :labels {:x :one :y :two}}))))
 
-(deftest get-deployment-test
+(deftest get-deployments-test
   (is (= {:path "kubectl"
           :command :get
           :type :deployments
           :resource :deployment-name
           :flags [[:-n :backend] [:-o :json]]}
-         (get-deployment {:namespace :backend
-                          :resource :deployment-name
-                          :json? true})))
+         (get-deployments {:namespace :backend
+                           :resource :deployment-name
+                           :json? true})))
 
   (is (= {:path "kubectl"
           :command :get
@@ -181,9 +181,9 @@
                   [:-l "x=one"]
                   [:-l "y=two"]
                   [:-o :yaml]]}
-         (get-deployment {:namespace :backend
-                          :labels {:x :one :y :two}
-                          :yaml? true})))
+         (get-deployments {:namespace :backend
+                           :labels {:x :one :y :two}
+                           :yaml? true})))
 
   (is (= {:path "kubectl"
           :command :get
@@ -192,9 +192,9 @@
           :flags [[:-n :backend]
                   [:-l "x=one"]
                   [:-l "y=two"]]}
-         (get-deployment {:namespace :backend
-                          :resource :deployment-name
-                          :labels {:x :one :y :two}}))))
+         (get-deployments {:namespace :backend
+                           :resource :deployment-name
+                           :labels {:x :one :y :two}}))))
 
 (deftest delete-deployment-test
   (is (= {:path "kubectl"
