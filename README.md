@@ -45,6 +45,12 @@ The namespace also provides some high level functions. For example the previous 
 (h/get-pod {:namespace :backend :resource :my-pod :json? true})
 ```
 
+You can even pass a manifest as string to apply with the `apply-stdin` helper:
+
+```clojure
+(h/apply-stdin {:stdin "blablabla" :json? true})
+```
+
 ### Running the command
 
 The command map can be run with `clojure-kubectl.kubectl/run-command`.
