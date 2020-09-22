@@ -91,9 +91,8 @@
      (:json? config) json
      (:yaml? config) yaml)))
 
-(def get-pod (partial kubectl-builder :pods :get))
 (def get-pods (partial kubectl-builder :pods :get))
-(def get-deployment (partial kubectl-builder :deployments :get))
+(def get-deployments (partial kubectl-builder :deployments :get))
 (def delete-deployment (partial kubectl-builder :deployments :delete))
 (def delete-secrets (partial kubectl-builder :secrets :delete))
 (def get-secrets (partial kubectl-builder :secrets :get))
