@@ -205,6 +205,17 @@
          (delete-deployment {:namespace :backend
                              :resource :deployment-name}))))
 
+(deftest get-ingress-test
+  (is (= {:path     "kubectl"
+          :command  :get
+          :flags    [[:-n :backend]
+                     [:-l "env=production"]]
+          :resource :deployment-name
+          :type     :ingress}
+         (get-ingresses {:namespace :backend
+                         :labels {:env :production}
+                         :resource :deployment-name}))))
+
 (deftest apply-stdin-test
   (is (= {:path "kubectl"
           :command :apply
