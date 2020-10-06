@@ -205,7 +205,7 @@
          (delete-deployment {:namespace :backend
                              :resource :deployment-name}))))
 
-(deftest get-ingress-test
+(deftest get-ingresses-test
   (is (= {:path     "kubectl"
           :command  :get
           :flags    [[:-n :backend]
