@@ -96,6 +96,7 @@
 (def delete-deployment (partial kubectl-builder :deployments :delete))
 (def delete-secrets (partial kubectl-builder :secrets :delete))
 (def get-secrets (partial kubectl-builder :secrets :get))
+(def get-ingresses (partial kubectl-builder :ingress :get))
 
 (defn apply-stdin
   "Apply a configuration from stdin. Valid options are:
