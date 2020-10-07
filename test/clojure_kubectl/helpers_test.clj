@@ -205,6 +205,15 @@
          (delete-deployment {:namespace :backend
                              :resource :deployment-name}))))
 
+(deftest delete-ingress-test
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :ingress
+          :resource :ingress-name
+          :flags [[:-n :backend]]}
+         (delete-ingress {:namespace :backend
+                          :resource :ingress-name}))))
+
 (deftest get-ingresses-test
   (is (= {:path     "kubectl"
           :command  :get

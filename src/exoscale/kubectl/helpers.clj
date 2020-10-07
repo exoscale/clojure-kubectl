@@ -61,7 +61,7 @@
   [m value]
   (assoc m :stdin value))
 
-(defn- kubectl-builder
+(defn kubectl-builder
   "Generic kubectl command builder.
 
   resource-type: k8s resource type
@@ -97,6 +97,7 @@
 (def delete-secrets (partial kubectl-builder :secrets :delete))
 (def get-secrets (partial kubectl-builder :secrets :get))
 (def get-ingresses (partial kubectl-builder :ingress :get))
+(def delete-ingress (partial kubectl-builder :ingress :delete))
 
 (defn apply-stdin
   "Apply a configuration from stdin. Valid options are:
