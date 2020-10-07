@@ -205,6 +205,35 @@
          (delete-deployment {:namespace :backend
                              :resource :deployment-name}))))
 
+(deftest delete-ingress-test
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :ingress
+          :resource :ingress-name
+          :flags [[:-n :backend]]}
+         (delete-ingresses {:namespace :backend
+                            :resource :ingress-name}))))
+
+(deftest delete-service-test
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :service
+          :resource :service-name
+          :flags [[:-n :backend]]}
+         (delete-services {:namespace :backend
+                           :resource :service-name}))))
+
+(deftest get-service-test
+  (is (= {:path     "kubectl"
+          :command  :get
+          :flags    [[:-n :backend]
+                     [:-l "env=production"]]
+          :resource :deployment-name
+          :type     :service}
+         (get-services {:namespace :backend
+                        :labels {:env :production}
+                        :resource :deployment-name}))))
+
 (deftest get-ingresses-test
   (is (= {:path     "kubectl"
           :command  :get
