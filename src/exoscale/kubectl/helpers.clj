@@ -72,6 +72,7 @@
     - `:resource`: the resource name.
     - `:labels`: labels as {key1 value1, key2 value2 ...}
     - `:stdin`: the value of stdin.
+    - `:flags`: additional flags for the command.
     - `:yaml?`: enable yaml formatting.
     - `:json?`: enable json formatting."
   ([resource-type operation config]
@@ -87,6 +88,9 @@
 
      (seq (:labels config))
      (labels (:labels config))
+
+     (:flags config)
+     (update :flags concat (:flags config))
 
      (:json? config) json
      (:yaml? config) yaml)))

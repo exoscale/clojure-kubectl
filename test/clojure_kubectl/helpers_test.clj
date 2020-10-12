@@ -219,9 +219,12 @@
           :command :delete
           :type :service
           :resource :service-name
-          :flags [[:-n :backend]]}
+          :flags [[:-n :backend]
+                  :--foo
+                  [:--bar "value"]]}
          (delete-services {:namespace :backend
-                           :resource :service-name}))))
+                           :resource :service-name
+                           :flags [:--foo [:--bar "value"]]}))))
 
 (deftest get-service-test
   (is (= {:path     "kubectl"
