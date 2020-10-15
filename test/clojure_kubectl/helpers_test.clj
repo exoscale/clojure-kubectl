@@ -208,7 +208,7 @@
 (deftest delete-ingress-test
   (is (= {:path "kubectl"
           :command :delete
-          :type :ingress
+          :type :ingress.networking.k8s.io
           :resource :ingress-name
           :flags [[:-n :backend]]}
          (delete-ingresses {:namespace :backend
@@ -243,7 +243,7 @@
           :flags    [[:-n :backend]
                      [:-l "env=production"]]
           :resource :deployment-name
-          :type     :ingress}
+          :type     :ingress.networking.k8s.io}
          (get-ingresses {:namespace :backend
                          :labels {:env :production}
                          :resource :deployment-name}))))
