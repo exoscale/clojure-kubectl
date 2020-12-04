@@ -89,7 +89,19 @@
                   [:-l "b=second-value"]]}
          (-> (kubectl)
              (labels {:a "first-value"
-                      :b "second-value"})))))
+                      :b "second-value"}))))
+  (is (= {:path "kubectl"
+          :flags [[:-l "qualified/keyword=first-value"]
+                  [:-l "b=second-value"]]}
+         (-> (kubectl)
+             (labels {:qualified/keyword "first-value"
+                      :b "second-value"}))))
+  (is (= {:path "kubectl"
+          :flags [[:-l "qualified/keyword=keyword-value"]
+                  [:-l "b=qualified/value"]]}
+         (-> (kubectl)
+             (labels {:qualified/keyword :keyword-value
+                      :b :qualified/value})))))
 
 (deftest get-pods-test
   (is (= {:path "kubectl"

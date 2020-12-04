@@ -37,7 +37,7 @@
 (defn labels
   "Add flags to the command"
   [m kvs]
-  (let [stringify (fn [v] (s/trim (if (instance? Named v) (name v) (str v))))
+  (let [stringify (fn [v] (s/trim (if (keyword? v) (-> v symbol str) (str v))))
         reducing-fn (fn [acc [k v]] (flag acc :-l (str (stringify k) "=" (stringify v))))]
     (reduce reducing-fn m kvs)))
 
