@@ -1,4 +1,4 @@
-(defproject exoscale/kubectl "0.1.9-SNAPSHOT"
+(defproject exoscale/kubectl "0.1.9"
   :description "A wrapper around the kubectl CLI"
   :url "https://github.com/exoscale/clojure-kubectl"
   :plugins [[lein-cljfmt "0.7.0"]
