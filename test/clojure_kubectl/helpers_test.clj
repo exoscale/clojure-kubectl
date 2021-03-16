@@ -40,12 +40,38 @@
             :flags [:--dry-run]}
            (-> (kubectl)
                (flag :--dry-run)))))
+
   (testing "multiple flags"
     (is (= {:path "kubectl"
             :flags [[:-l "foo"] [:-l "bar"]]}
            (-> (kubectl)
                (flag :-l "foo")
                (flag :-l "bar"))))))
+
+(deftest kubectl-builder-test
+  (is (= {:path "kubectl"
+          :command :get
+          :type :pods
+          :flags [[:-l "foo"]
+                  [:-l "bar"]]}
+         (-> (kubectl-builder :pods
+                              :get
+                              {:flags [[:-l "foo"]]})
+             (flag :-l "bar"))))
+
+  (is (= {:path "kubectl"
+          :command :get
+          :type :pods
+          :flags [[:-n "test"]
+                  [:-l "env=prod"]
+                  [:-l "foo"]
+                  [:-l "bar"]]}
+         (-> (kubectl-builder :pods
+                              :get
+                              {:namespace "test"
+                               :flags [[:-l "foo"]]
+                               :labels {:env "prod"}})
+             (flag :-l "bar")))))
 
 (deftest namespace-test
   (is (= {:path "kubectl"
