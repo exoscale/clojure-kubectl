@@ -61,6 +61,11 @@
   [m value]
   (assoc m :stdin value))
 
+(defn- concat*
+  "same as concat but returns vector"
+  [& args]
+  (into [] (apply concat args)))
+
 (defn kubectl-builder
   "Generic kubectl command builder.
 
@@ -90,7 +95,7 @@
      (labels (:labels config))
 
      (:flags config)
-     (update :flags concat (:flags config))
+     (update :flags concat* (:flags config))
 
      (:json? config) json
      (:yaml? config) yaml)))

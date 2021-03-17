@@ -40,11 +40,38 @@
             :flags [:--dry-run]}
            (-> (kubectl)
                (flag :--dry-run)))))
-  (testing "simple flag"
+
+  (testing "multiple flags"
     (is (= {:path "kubectl"
-            :flags [:--dry-run]}
+            :flags [[:-l "foo"] [:-l "bar"]]}
            (-> (kubectl)
-               (flag :--dry-run))))))
+               (flag :-l "foo")
+               (flag :-l "bar"))))))
+
+(deftest kubectl-builder-test
+  (is (= {:path "kubectl"
+          :command :get
+          :type :pods
+          :flags [[:-l "foo"]
+                  [:-l "bar"]]}
+         (-> (kubectl-builder :pods
+                              :get
+                              {:flags [[:-l "foo"]]})
+             (flag :-l "bar"))))
+
+  (is (= {:path "kubectl"
+          :command :get
+          :type :pods
+          :flags [[:-n "test"]
+                  [:-l "env=prod"]
+                  [:-l "foo"]
+                  [:-l "bar"]]}
+         (-> (kubectl-builder :pods
+                              :get
+                              {:namespace "test"
+                               :flags [[:-l "foo"]]
+                               :labels {:env "prod"}})
+             (flag :-l "bar")))))
 
 (deftest namespace-test
   (is (= {:path "kubectl"
@@ -111,8 +138,8 @@
           :flags [[:-n :backend]
                   [:-o :json]]}
          (get-pods {:namespace :backend
-                   :resource :foo
-                   :json? true})))
+                    :resource :foo
+                    :json? true})))
 
   (is (= {:path "kubectl"
           :command :get
@@ -123,9 +150,9 @@
                   [:-l "y=two"]
                   [:-o :yaml]]}
          (get-pods {:namespace :backend
-                   :resource :foo
-                   :labels {:x :one :y :two}
-                   :yaml? true})))
+                    :resource :foo
+                    :labels {:x :one :y :two}
+                    :yaml? true})))
 
   (is (= {:path "kubectl"
           :command :get
@@ -224,6 +251,16 @@
           :resource :ingress-name
           :flags [[:-n :backend]]}
          (delete-ingresses {:namespace :backend
+                            :resource :ingress-name})))
+
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :ingress.networking.k8s.io
+          :resource :ingress-name
+          :flags [[:-n :backend]
+                  [:-l "foo"]]}
+         (delete-ingresses {:namespace :backend
+                            :flags [[:-l "foo"]]
                             :resource :ingress-name}))))
 
 (deftest delete-service-test
@@ -236,7 +273,19 @@
                   [:--bar "value"]]}
          (delete-services {:namespace :backend
                            :resource :service-name
-                           :flags [:--foo [:--bar "value"]]}))))
+                           :flags [:--foo [:--bar "value"]]})))
+
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :service
+          :resource :service-name
+          :flags [[:-n :backend]
+                  [:-l "env=production"]
+                  [:--bar "value"]]}
+         (delete-services {:namespace :backend
+                           :labels {:env :production}
+                           :resource :service-name
+                           :flags [[:--bar "value"]]}))))
 
 (deftest get-service-test
   (is (= {:path     "kubectl"
@@ -246,6 +295,17 @@
           :resource :deployment-name
           :type     :service}
          (get-services {:namespace :backend
+                        :labels {:env :production}
+                        :resource :deployment-name})))
+  (is (= {:path     "kubectl"
+          :command  :get
+          :flags    [[:-n :backend]
+                     [:-l "env=production"]
+                     [:-l "bar"]]
+          :resource :deployment-name
+          :type     :service}
+         (get-services {:namespace :backend
+                        :flags [[:-l "bar"]]
                         :labels {:env :production}
                         :resource :deployment-name}))))
 
@@ -257,6 +317,18 @@
           :resource :deployment-name
           :type     :ingress.networking.k8s.io}
          (get-ingresses {:namespace :backend
+                         :labels {:env :production}
+                         :resource :deployment-name})))
+  (is (= {:path     "kubectl"
+          :command  :get
+          :flags    [[:-n :backend]
+                     [:-l "env=production"]
+                     [:-l "foo"]
+                     [:-l "bar"]]
+          :resource :deployment-name
+          :type     :ingress.networking.k8s.io}
+         (get-ingresses {:namespace :backend
+                         :flags [[:-l "foo"] [:-l "bar"]]
                          :labels {:env :production}
                          :resource :deployment-name}))))
 

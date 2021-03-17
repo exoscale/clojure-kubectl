@@ -40,10 +40,11 @@
                                :command :get
                                :type :pods
                                :flags [[:-n :backend] [:-l "label=name"]]})))
-  (is (= ["kubectl" "get" "pods" "-n" "backend" "-l" "label=first"  "-l" "label=second"]
+  (is (= ["kubectl" "get" "pods" "-n" "backend" "-l" "label=first"  "-l" "label=second" "-l" "foo"]
          (build-shell-command {:path "kubectl"
                                :command :get
                                :type :pods
                                :flags [[:-n :backend]
                                        [:-l "label=first"]
-                                       [:-l "label=second"]]}))))
+                                       [:-l "label=second"]
+                                       [:-l "foo"]]}))))
