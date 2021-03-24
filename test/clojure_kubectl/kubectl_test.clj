@@ -1,5 +1,6 @@
 (ns clojure-kubectl.kubectl-test
   (:require [exoscale.kubectl :refer :all]
+            exoscale.ex.test
             [clojure.test :refer :all]))
 
 (deftest sort-flags-test
@@ -48,3 +49,10 @@
                                        [:-l "label=first"]
                                        [:-l "label=second"]
                                        [:-l "foo"]]}))))
+(deftest test-await
+  (with-redefs [run-command (fn [& _] :yolo)]
+    (is (thrown-ex-info-type? :exoscale.ex/interrupted
+                              (await! [:who :cares] (constantly false)
+                                      3000)))
+    (is (= :yolo (await! [:who :cares] (constantly true)
+                         3000)))))
