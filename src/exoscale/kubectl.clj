@@ -1,5 +1,6 @@
 (ns exoscale.kubectl
   (:require [clojure.java.shell :as shell]
+            [clojure.spec.alpha :as s]
             [exoscale.ex :as ex]))
 
 (defn sort-flags
@@ -60,3 +61,23 @@
 
 (defprotocol Runner
   (run [this cmd] "Run a kubectl command"))
+
+(defn await!
+  "Runs cmd every 2s until condition f is satisfied, quits after timeout expired"
+  [cmd f timeout-ms]
+  (ex/assert-spec-valid (s/int-in 2000 Long/MAX_VALUE) timeout-ms)
+  (let [start-time (System/currentTimeMillis)]
+    (loop []
+      (let [result (run-command cmd)]
+        (cond
+          (f result)
+          result
+
+          (>= (- (System/currentTimeMillis) start-time)
+              timeout-ms)
+          (ex/ex-interrupted! "Operation timed out after retries")
+
+          :else
+          (do
+            (Thread/sleep 2000)
+            (recur)))))))
