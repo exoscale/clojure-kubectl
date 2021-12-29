@@ -332,6 +332,41 @@
                          :labels {:env :production}
                          :resource :deployment-name}))))
 
+(deftest get-jobs-test
+  (is (= {:path "kubectl"
+          :command :get
+          :type :jobs
+          :resource :foo
+          :flags [[:-n :backend]
+                  [:-o :json]]}
+         (get-jobs {:namespace :backend
+                    :resource :foo
+                    :json? true})))
+
+  (is (= {:path "kubectl"
+          :command :get
+          :type :jobs
+          :resource :foo
+          :flags [[:-n :backend]
+                  [:-l "x=one"]
+                  [:-l "y=two"]
+                  [:-o :yaml]]}
+         (get-jobs {:namespace :backend
+                    :resource :foo
+                    :labels {:x :one :y :two}
+                    :yaml? true})))
+
+  (is (= {:path "kubectl"
+          :command :get
+          :type :jobs
+          :resource :foos
+          :flags [[:-n :backend]
+                  [:-l "x=one"]
+                  [:-l "y=two"]]}
+         (get-jobs {:namespace :backend
+                    :resource :foos
+                    :labels {:x :one :y :two}}))))
+
 (deftest apply-stdin-test
   (is (= {:path "kubectl"
           :command :apply
