@@ -109,6 +109,8 @@
 (def delete-ingresses (partial kubectl-builder :ingress.networking.k8s.io :delete))
 (def get-services (partial kubectl-builder :service :get))
 (def delete-services (partial kubectl-builder :service :delete))
+(def get-jobs (partial kubectl-builder :jobs :get))
+(def delete-jobs (partial kubectl-builder :jobs :delete))
 
 (defn apply-stdin
   "Apply a configuration from stdin. Valid options are:
