@@ -165,6 +165,13 @@
                     :resource :foos
                     :labels {:x :one :y :two}}))))
 
+(deftest get-nodes-test
+  (is (= {:path "kubectl"
+          :command :get
+          :type :nodes
+          :flags [[:-o :json]]})
+      (get-nodes {:json? true})))
+
 (deftest get-secrets-test
   (is (= {:path "kubectl"
           :command :get
@@ -366,6 +373,19 @@
          (get-jobs {:namespace :backend
                     :resource :foos
                     :labels {:x :one :y :two}}))))
+
+(deftest delete-jobs-test
+  (is (= {:path "kubectl"
+          :command :delete
+          :type :jobs
+          :resource :job-name
+          :flags [[:-n :backend]
+                  [:--bar "value"]
+                  [:-o :json]]}
+         (delete-jobs {:namespace :backend
+                       :resource :job-name
+                       :json? true
+                       :flags [[:--bar "value"]]}))))
 
 (deftest apply-stdin-test
   (is (= {:path "kubectl"
