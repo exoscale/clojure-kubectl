@@ -100,16 +100,17 @@
      (:json? config) json
      (:yaml? config) yaml)))
 
-(def get-pods (partial kubectl-builder :pods :get))
 (def get-deployments (partial kubectl-builder :deployments :get))
+(def get-ingresses (partial kubectl-builder :ingress.networking.k8s.io :get))
+(def get-jobs (partial kubectl-builder :jobs :get))
+(def get-nodes (partial kubectl-builder :nodes :get))
+(def get-pods (partial kubectl-builder :pods :get))
+(def get-secrets (partial kubectl-builder :secrets :get))
+(def get-services (partial kubectl-builder :service :get))
 (def delete-deployment (partial kubectl-builder :deployments :delete))
 (def delete-secrets (partial kubectl-builder :secrets :delete))
-(def get-secrets (partial kubectl-builder :secrets :get))
-(def get-ingresses (partial kubectl-builder :ingress.networking.k8s.io :get))
 (def delete-ingresses (partial kubectl-builder :ingress.networking.k8s.io :delete))
-(def get-services (partial kubectl-builder :service :get))
 (def delete-services (partial kubectl-builder :service :delete))
-(def get-jobs (partial kubectl-builder :jobs :get))
 (def delete-jobs (partial kubectl-builder :jobs :delete))
 
 (defn apply-stdin
