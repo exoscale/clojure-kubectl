@@ -107,6 +107,7 @@
 (def get-pods (partial kubectl-builder :pods :get))
 (def get-secrets (partial kubectl-builder :secrets :get))
 (def get-services (partial kubectl-builder :service :get))
+(def get-endpoints (partial kubectl-builder :endpoints :get))
 (def delete-deployment (partial kubectl-builder :deployments :delete))
 (def delete-secrets (partial kubectl-builder :secrets :delete))
 (def delete-ingresses (partial kubectl-builder :ingress.networking.k8s.io :delete))

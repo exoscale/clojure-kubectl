@@ -169,8 +169,8 @@
   (is (= {:path "kubectl"
           :command :get
           :type :nodes
-          :flags [[:-o :json]]})
-      (get-nodes {:json? true})))
+          :flags [[:-o :json]]}
+         (get-nodes {:json? true}))))
 
 (deftest get-secrets-test
   (is (= {:path "kubectl"
@@ -395,3 +395,14 @@
                   [:-o :json]]}
          (apply-stdin {:json? true
                        :stdin "foo"}))))
+
+(deftest get-endpoints-test
+  (is (= {:path "kubectl"
+          :command :get
+          :type :endpoints
+          :resource :foos
+          :flags [[:-n :sks]
+                  [:-o :json]]}
+         (get-endpoints {:namespace :sks
+                         :json? true
+                         :resource :foos}))))
